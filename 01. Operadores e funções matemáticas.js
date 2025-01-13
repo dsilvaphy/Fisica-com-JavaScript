@@ -1,0 +1,39 @@
+// 1. Equação de movimento para o MRU
+function movimentoMRU(x0, v0, a, t) {
+    return x0 + v0 * t + (1 / 2) * a * t ** 2;
+}
+console.log("1. Movimento MRU:", movimentoMRU(3.00, 5.00, -9.80, 2.00));
+
+// 2. Amplitude de uma onda transversal
+function amplitudeOnda(y0, f, lambda, x, t) {
+    const alpha = 1 / lambda;
+    const freq = f;
+    return y0 * Math.cos(2 * Math.PI * (alpha * x - freq * t));
+}
+console.log("2. Amplitude da onda:", amplitudeOnda(1.00e-2, 1.00e5, 0.033, 2.00, 2.00));
+
+// 3. Campo elétrico de uma carga em um ponto do espaço
+function campoEletrico(k, q, x, y, z) {
+    const r = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
+    const Ex = (k * q * x) / r ** 3;
+    const Ey = (k * q * y) / r ** 3;
+    const Ez = (k * q * z) / r ** 3;
+    return { Ex, Ey, Ez };
+}
+const k = 8.99e9; // N·m²/C²
+const q = 1.602e-19; // C
+console.log("3. Campo elétrico:", campoEletrico(k, q, 1.00e-9, 2.00e-9, 3.00e-9));
+
+// 4. Distribuição normal ou gaussiana
+function gaussiana(A, x, x0, sigma) {
+    return A * Math.exp(-((x - x0) ** 2) / (2 * sigma ** 2));
+}
+console.log("4. Gaussiana:", gaussiana(10, 10, 5.0, 5.0 / 4));
+
+// 5. Função de onda do estado fundamental
+function funcaoOnda(Z, a0, r) {
+    const pi = Math.PI;
+    const psi = (1 / Math.sqrt(pi)) * (Z / a0) ** (3 / 2) * Math.exp(-Z * r / a0);
+    return psi;
+}
+console.log("5. Função de onda:", funcaoOnda(2, 5.0e-11, 2 * 5.0e-11));
