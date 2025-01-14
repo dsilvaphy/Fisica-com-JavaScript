@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios HTML</title>
+</head>
+<body>
+    <script>
+        // 1. Imprimir pares coordenados no formato especificado
+        function imprimirCoordenadas(input) {
+            const valores = input.split(",");
+            document.write("<h3>1. Pares Coordenados:</h3>");
+            for (let i = 0; i < valores.length; i += 2) {
+                document.write(`x${i / 2 + 1} = ${valores[i].trim()}, y${i / 2 + 1} = ${valores[i + 1].trim()}<br>`);
+            }
+        }
+        imprimirCoordenadas("1,2,3,4,5,6");
+
+        // 2. Validação de CPF
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/\D/g, ""); // Remove caracteres não numéricos
+            if (cpf.length !== 11) return false;
+
+            // Cálculo do primeiro dígito verificador
+            let soma = 0;
+            for (let i = 0; i < 9; i++) soma += cpf[i] * (10 - i);
+            let resto = soma % 11;
+            let digito1 = resto < 2 ? 0 : 11 - resto;
+
+            // Cálculo do segundo dígito verificador
+            soma = 0;
+            for (let i = 0; i < 10; i++) soma += cpf[i] * (11 - i);
+            resto = soma % 11;
+            let digito2 = resto < 2 ? 0 : 11 - resto;
+
+            // Verificação dos dígitos
+            return cpf[9] == digito1 && cpf[10] == digito2;
+        }
+        document.write("<h3>2. CPF Válido:</h3>");
+        document.write(validarCPF("12345678909") + "<br>");
+
+        // 3. Criptografia simples
+        function embaralharSenha(senha, ordem) {
+            let senhaEmbaralhada = "";
+            for (let i = 0; i < ordem.length; i++) {
+                senhaEmbaralhada += senha[ordem[i] - 1];
+            }
+            return senhaEmbaralhada;
+        }
+
+        function desEmbaralharSenha(senha, ordem) {
+            let senhaOriginal = [];
+            for (let i = 0; i < ordem.length; i++) {
+                senhaOriginal[ordem[i] - 1] = senha[i];
+            }
+            return senhaOriginal.join("");
+        }
+
+        const senhaOriginal = "abcdef";
+        const ordem = [3, 5, 1, 6, 4, 2];
+        const senhaCriptografada = embaralharSenha(senhaOriginal, ordem);
+        document.write("<h3>3. Senha Criptografada e Original:</h3>");
+        document.write(`Criptografada: ${senhaCriptografada}<br>`);
+        document.write(`Original: ${desEmbaralharSenha(senhaCriptografada, ordem)}<br>`);
+
+        // 4. Converter números em cor hexadecimal
+        function gerarCorRGB(input) {
+            const numeros = input.split(",").map(Number);
+            const hex = numeros.map(num => num.toString(16).padStart(2, "0"));
+            return `#${hex.join("")}`;
+        }
+        document.write("<h3>4. Cor Gerada:</h3>");
+        document.write(gerarCorRGB("255,0,128") + "<br>");
+
+        // 5. Soma e produto em sistema quaternário
+        function quaternarioParaDecimal(numero) {
+            return numero.split("").reduce((acc, val, index) => acc + parseInt(val, 10) * Math.pow(4, numero.length - 1 - index), 0);
+        }
+
+        function somaEProdutoQuaternario(num1, num2) {
+            const decimal1 = quaternarioParaDecimal(num1);
+            const decimal2 = quaternarioParaDecimal(num2);
+            return {
+                soma: decimal1 + decimal2,
+                produto: decimal1 * decimal2,
+            };
+        }
+        const resultadoQuaternario = somaEProdutoQuaternario("10", "12");
+        document.write("<h3>5. Soma e Produto em Quaternário:</h3>");
+        document.write(`Soma: ${resultadoQuaternario.soma}, Produto: ${resultadoQuaternario.produto}<br>`);
+
+        // 6. Contagem de palavras por tamanho
+        function contarTamanhos(frase) {
+            const palavras = frase.split(" ");
+            const contagem = Array(15).fill(0);
+            palavras.forEach(palavra => {
+                const tamanho = palavra.length;
+                if (tamanho <= 14) contagem[tamanho]++;
+            });
+            return contagem;
+        }
+        const contagemPalavras = contarTamanhos("Esta é uma frase de teste para verificar tamanhos de palavras.");
+        document.write("<h3>6. Contagem de Palavras:</h3>");
+        contagemPalavras.forEach((qtd, tamanho) => {
+            if (qtd > 0) document.write(`${qtd} palavras com ${tamanho} letras<br>`);
+        });
+
+        // 7. DNA aleatório e contagem de subsequências
+        function gerarDNA(tamanho) {
+            const bases = ["A", "C", "G", "T"];
+            let dna = "";
+            for (let i = 0; i < tamanho; i++) {
+                dna += bases[Math.floor(Math.random() * bases.length)];
+            }
+            return dna;
+        }
+
+        function contarSubsequencias(dna, sequencias) {
+            const contagem = {};
+            sequencias.forEach(seq => {
+                let regex = new RegExp(seq, "g");
+                contagem[seq] = (dna.match(regex) || []).length;
+            });
+            return contagem;
+        }
+
+        const dna = gerarDNA(100);
+        const subsequencias = contarSubsequencias(dna, ["AA", "AAA", "AAAA"]);
+        document.write("<h3>7. DNA Gerado e Subsequências:</h3>");
+        document.write(`DNA: ${dna}<br>`);
+        for (const seq in subsequencias) {
+            document.write(`Subsequência "${seq}": ${subsequencias[seq]}<br>`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios em HTML</title>
+</head>
+<body>
+    <script>
+        // 1. Função volume(raio)
+        function volumeEsfera(raio) {
+            return (4 / 3) * Math.PI * Math.pow(raio, 3);
+        }
+        document.write("<h3>1. Volume da esfera:</h3>");
+        document.write(volumeEsfera(3).toFixed(2) + "<br>");
+
+        // 2. Função volume(objeto, dim)
+        function volumeObjeto(objeto, dim) {
+            if (objeto === "cubo") {
+                return Math.pow(dim, 3);
+            } else if (objeto === "esfera") {
+                return volumeEsfera(dim);
+            } else {
+                return "Objeto inválido!";
+            }
+        }
+        document.write("<h3>2. Volume do cubo e da esfera:</h3>");
+        document.write("Cubo: " + volumeObjeto("cubo", 3) + "<br>");
+        document.write("Esfera: " + volumeObjeto("esfera", 3).toFixed(2) + "<br>");
+
+        // 3. Função potencial(x, y, z)
+        function potencial(x, y, z) {
+            const k = 8.99e9; // Constante elétrica
+            const q = 1.6e-19; // Carga elementar
+            const r = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
+            return (k * q) / r;
+        }
+        document.write("<h3>3. Potencial elétrico:</h3>");
+        document.write(potencial(1, 1, 1).toExponential(2) + "<br>");
+
+        // 4. Função campo(x, y, z)
+        function campo(x, y, z) {
+            const k = 8.99e9; // Constante elétrica
+            const q = 1.6e-19; // Carga elementar
+            const r = Math.sqrt(x ** 2 + y ** 2 + z ** 2);
+            const cosTheta = z / r;
+            const sinTheta = y / r;
+            return {
+                Ex: (k * q * cosTheta) / (r ** 2),
+                Ey: (k * q * sinTheta) / (r ** 2),
+                Ez: (k * q * z) / (r ** 2),
+            };
+        }
+        const campoResult = campo(1, 1, 1);
+        document.write("<h3>4. Campo elétrico:</h3>");
+        document.write(`Ex: ${campoResult.Ex.toExponential(2)}, Ey: ${campoResult.Ey.toExponential(2)}, Ez: ${campoResult.Ez.toExponential(2)}<br>`);
+
+        // 5. Função modVet(x, y, z)
+        function modVet(x, y, z) {
+            return Math.sqrt(x ** 2 + y ** 2 + z ** 2);
+        }
+        document.write("<h3>5. Módulo do vetor:</h3>");
+        document.write(modVet(3, 4, 5).toFixed(2) + "<br>");
+
+        // 6. Função angVet(v1, v2)
+        function angVet(v1, v2) {
+            const dotProduct = v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+            const modV1 = modVet(...v1);
+            const modV2 = modVet(...v2);
+            const cosTheta = dotProduct / (modV1 * modV2);
+            return Math.acos(cosTheta) * (180 / Math.PI); // Ângulo em graus
+        }
+        document.write("<h3>6. Ângulo entre vetores:</h3>");
+        document.write(angVet([1, 0, 0], [0, 1, 0]).toFixed(2) + " graus<br>");
+
+        // 7. Função prodVet(a, b)
+        function prodVet(a, b) {
+            return [
+                a[1] * b[2] - b[1] * a[2], // cx
+                a[2] * b[0] - b[2] * a[0], // cy
+                a[0] * b[1] - b[0] * a[1], // cz
+            ];
+        }
+        const produtoVetorial = prodVet([1, 0, 0], [0, 1, 0]);
+        document.write("<h3>7. Produto vetorial:</h3>");
+        document.write(`Cx: ${produtoVetorial[0]}, Cy: ${produtoVetorial[1]}, Cz: ${produtoVetorial[2]}<br>`);
+
+        // 8. Função iguais(a, b)
+        function iguais(a, b) {
+            return a === b;
+        }
+        document.write("<h3>8. Iguais:</h3>");
+        document.write(iguais(5, 5) + "<br>");
+
+        // 9. Função iguais(a, b, c)
+        function iguaisTres(a, b, c) {
+            return a === b && b === c;
+        }
+        document.write("<h3>9. Iguais (três elementos):</h3>");
+        document.write(iguaisTres(5, 5, 5) + "<br>");
+
+        // 10. Função zeros(a, b, c)
+        function zeros(a, b, c) {
+            return a === 0 && b === 0 && c === 0;
+        }
+        document.write("<h3>10. Zeros:</h3>");
+        document.write(zeros(0, 0, 0) + "<br>");
+
+        // 13. Modificar cálculo da força elétrica
+        function forcaEletrica() {
+            const k = 8.99e9; // Constante elétrica
+            const q1 = 1e-6; // Carga 1
+            const q2 = 1e-6; // Carga 2
+            const resultados = [];
+
+            for (let r = 1; r <= 10000; r *= 10) {
+                const f = (k * q1 * q2) / (r ** 2);
+                const logF = Math.log10(f);
+                const logR = Math.log10(r);
+                resultados.push({ r, f: f.toExponential(2), logF: logF.toFixed(2), logR: logR.toFixed(2) });
+            }
+            return resultados;
+        }
+
+        document.write("<h3>13. Força elétrica:</h3>");
+        forcaEletrica().forEach(res => 
+            document.write(`Distância: ${res.r}, Força: ${res.f}, log(F): ${res.logF}, log(R): ${res.logR}<br>`)
+        );
+    </script>
+</body>
+</html>

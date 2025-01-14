@@ -1,0 +1,262 @@
+// 1. Pêndulo simples
+function desenharPendulo() {
+    const canvas = document.getElementById('canvasPendulo');
+    const ctx = canvas.getContext('2d');
+    const largura = canvas.width;
+    const altura = canvas.height;
+    const centroX = largura / 2;
+    const centroY = altura / 4;
+
+    ctx.clearRect(0, 0, largura, altura);
+
+    // Linha do pêndulo
+    ctx.beginPath();
+    ctx.moveTo(centroX, centroY);
+    ctx.lineTo(centroX - 50, centroY + 100);
+    ctx.strokeStyle = 'gray';
+    ctx.stroke();
+
+    // Esfera do pêndulo
+    ctx.beginPath();
+    ctx.arc(centroX - 50, centroY + 100, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    // Linha vertical
+    ctx.beginPath();
+    ctx.moveTo(centroX, centroY);
+    ctx.lineTo(centroX, altura);
+    ctx.strokeStyle = 'lightgray';
+    ctx.stroke();
+
+    // Arco
+    ctx.beginPath();
+    ctx.arc(centroX, centroY, 50, Math.PI / 3, Math.PI / 2, false);
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+}
+
+// 2. Animação do pêndulo
+let angulo = Math.PI / 6; // Ângulo inicial
+let velocidadeAngular = 0.02;
+
+function animarPendulo() {
+    const canvas = document.getElementById('canvasPendulo');
+    const ctx = canvas.getContext('2d');
+    const largura = canvas.width;
+    const altura = canvas.height;
+    const centroX = largura / 2;
+    const centroY = altura / 4;
+    const comprimento = 100;
+
+    ctx.clearRect(0, 0, largura, altura);
+
+    // Calcula as novas coordenadas
+    const x = centroX + comprimento * Math.sin(angulo);
+    const y = centroY + comprimento * Math.cos(angulo);
+
+    // Linha do pêndulo
+    ctx.beginPath();
+    ctx.moveTo(centroX, centroY);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = 'gray';
+    ctx.stroke();
+
+    // Esfera do pêndulo
+    ctx.beginPath();
+    ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    // Atualiza o ângulo
+    angulo += velocidadeAngular;
+
+    requestAnimationFrame(animarPendulo);
+}
+
+// 3. Pêndulo amortecido (harmônico)
+function animarPenduloAmortecido() {
+    const canvas = document.getElementById('canvasPendulo');
+    const ctx = canvas.getContext('2d');
+    const largura = canvas.width;
+    const altura = canvas.height;
+    const centroX = largura / 2;
+    const centroY = altura / 4;
+    const comprimento = 100;
+
+    let anguloAmortecido = Math.PI / 6; // Ângulo inicial
+    let velocidadeAmortecimento = 0.01;
+
+    ctx.clearRect(0, 0, largura, altura);
+
+    // Calcula as novas coordenadas
+    const x = centroX + comprimento * Math.sin(anguloAmortecido);
+    const y = centroY + comprimento * Math.cos(anguloAmortecido);
+
+    // Linha do pêndulo
+    ctx.beginPath();
+    ctx.moveTo(centroX, centroY);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = 'gray';
+    ctx.stroke();
+
+    // Esfera do pêndulo
+    ctx.beginPath();
+    ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    // Atualiza o ângulo com amortecimento
+    velocidadeAmortecimento *= 0.99; // Fator de amortecimento
+    anguloAmortecido += velocidadeAmortecimento;
+
+    requestAnimationFrame(animarPenduloAmortecido);
+}
+
+// 4. Desenho de espalhamento Compton
+function desenharCompton() {
+    const canvas = document.getElementById('canvasCompton');
+    const ctx = canvas.getContext('2d');
+    const largura = canvas.width;
+    const altura = canvas.height;
+
+    ctx.clearRect(0, 0, largura, altura);
+
+    // Fóton inicial
+    ctx.beginPath();
+    ctx.moveTo(50, 100);
+    ctx.lineTo(100, 100);
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+
+    // Elétron inicial
+    ctx.beginPath();
+    ctx.arc(100, 100, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    // Fóton espalhado
+    ctx.beginPath();
+    ctx.moveTo(100, 100);
+    ctx.lineTo(150, 50);
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+
+    // Elétron espalhado
+    ctx.beginPath();
+    ctx.arc(150, 150, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+}
+
+// 5. Passeio aleatório
+function passeioAleatorio() {
+    const canvas = document.getElementById('canvasPasseio');
+    const ctx = canvas.getContext('2d');
+    const largura = canvas.width;
+    const altura = canvas.height;
+
+    const passos = 100;
+    const passoTamanho = 2;
+    let x = largura / 2;
+    let y = altura / 2;
+
+    ctx.clearRect(0, 0, largura, altura);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+
+    for (let i = 0; i < passos; i++) {
+        const angulo = Math.random() * 2 * Math.PI;
+        x += passoTamanho * Math.cos(angulo);
+        y += passoTamanho * Math.sin(angulo);
+        ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+}
+
+// 6. Modelo de onda bidimensional
+function ondaBidimensional() {
+    const canvas = document.getElementById('canvasOnda');
+    const ctx = canvas.getContext('2d');
+    const largura = canvas.width;
+    const altura = canvas.height;
+
+    ctx.clearRect(0, 0, largura, altura);
+
+    for (let x = 0; x < largura; x++) {
+        for (let y = 0; y < altura; y++) {
+            const intensidade = Math.sin((x + y) / 10) * 128 + 128;
+            ctx.fillStyle = `rgb(${intensidade},${intensidade},255)`;
+            ctx.fillRect(x, y, 1, 1);
+        }
+    }
+}
+
+// 7. Relógio analógico
+function desenharRelogio() {
+    const canvas = document.getElementById('canvasRelogio');
+    const ctx = canvas.getContext('2d');
+    const largura = canvas.width;
+    const altura = canvas.height;
+    const raio = Math.min(largura, altura) / 2;
+
+    const agora = new Date();
+    const horas = agora.getHours();
+    const minutos = agora.getMinutes();
+    const segundos = agora.getSeconds();
+
+    ctx.clearRect(0, 0, largura, altura);
+
+    // Círculo do relógio
+    ctx.beginPath();
+    ctx.arc(largura / 2, altura / 2, raio - 10, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    // Ponteiro das horas
+    const anguloHora = ((horas % 12) / 12) * 2 * Math.PI - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(largura / 2, altura / 2);
+    ctx.lineTo(
+        largura / 2 + Math.cos(anguloHora) * (raio * 0.5),
+        altura / 2 + Math.sin(anguloHora) * (raio * 0.5)
+    );
+    ctx.stroke();
+
+    // Ponteiro dos minutos
+    const anguloMinuto = (minutos / 60) * 2 * Math.PI - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(largura / 2, altura / 2);
+    ctx.lineTo(
+        largura / 2 + Math.cos(anguloMinuto) * (raio * 0.7),
+        altura / 2 + Math.sin(anguloMinuto) * (raio * 0.7)
+    );
+    ctx.stroke();
+
+    // Ponteiro dos segundos
+    const anguloSegundo = (segundos / 60) * 2 * Math.PI - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(largura / 2, altura / 2);
+    ctx.lineTo(
+        largura / 2 + Math.cos(anguloSegundo) * (raio * 0.9),
+        altura / 2 + Math.sin(anguloSegundo) * (raio * 0.9)
+    );
+    ctx.stroke();
+
+    requestAnimationFrame(desenharRelogio);
+}
+
+// 8. Vetores
+function calcularVetores() {
+    const v1x = parseFloat(document.getElementById('v1x').value);
+    const v1y = parseFloat(document.getElementById('v1y').value);
+    const v2x = parseFloat(document.getElementById('v2x').value);
+    const v2y = parseFloat(document.getElementById('v2y').value);
+
+    const v3x = v1x + v2x;
+    const v3y = v1y + v2y;
+
+    document.getElementById('v3x').value = v3x;
+    document.getElementById('v3y').value = v3y;
+}

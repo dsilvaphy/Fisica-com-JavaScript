@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios de Matrizes e Vetores</title>
+</head>
+<body>
+    <script>
+        // 1. Criar matriz bidimensional
+        function criarMatriz(n, m) {
+            const matriz = [];
+            for (let i = 1; i <= n; i++) {
+                const linha = [];
+                for (let j = 1; j <= m; j++) {
+                    linha.push(Math.sqrt(i ** 2 + j ** 2).toFixed(2));
+                }
+                matriz.push(linha);
+            }
+            return matriz;
+        }
+        const matriz1 = criarMatriz(2, 3);
+        document.write("<h3>1. Matriz bidimensional:</h3>");
+        matriz1.forEach(linha => document.write(linha.join(" ") + "<br>"));
+
+        // 2. Criar matriz quadrada e soma da diagonal
+        function criarMatrizQuadrada(n) {
+            const matriz = [];
+            for (let i = 1; i <= n; i++) {
+                const linha = [];
+                for (let j = 1; j <= n; j++) {
+                    linha.push(2 * i + j);
+                }
+                matriz.push(linha);
+            }
+            return matriz;
+        }
+
+        function somaDiagonal(matriz) {
+            let soma = 0;
+            for (let i = 0; i < matriz.length; i++) {
+                soma += matriz[i][i];
+            }
+            return soma;
+        }
+
+        const matriz2 = criarMatrizQuadrada(3);
+        document.write("<h3>2. Matriz quadrada:</h3>");
+        matriz2.forEach(linha => document.write(linha.join(" ") + "<br>"));
+        document.write("<p>A soma dos elementos da diagonal é: " + somaDiagonal(matriz2) + "</p>");
+
+        // 3. Reproduzir "Batalha Naval"
+        function criarBatalhaNaval() {
+            const tabuleiro = [
+                ["X", "-", "-", "-", "X"],
+                ["-", "-", "-", "-", "-"],
+                ["X", "-", "-", "-", "X"],
+                ["-", "-", "-", "-", "-"],
+                ["X", "-", "-", "-", "X"],
+            ];
+            return tabuleiro;
+        }
+
+        const batalhaNaval = criarBatalhaNaval();
+        document.write("<h3>3. Batalha Naval:</h3>");
+        batalhaNaval.forEach(linha => document.write(linha.join(" ") + "<br>"));
+
+        // 4. Calcular médias dos alunos
+        function calcularMedias(alunos, pesos) {
+            alunos.forEach(aluno => {
+                const notas = aluno.notas;
+                const media = notas.reduce((acc, nota, index) => acc + nota * pesos[index], 0) / pesos.reduce((acc, peso) => acc + peso, 0);
+                aluno.media = media.toFixed(2);
+                aluno.status = media >= 6 ? "Aprovado" : "Reprovado";
+            });
+            return alunos;
+        }
+
+        const alunos = [
+            { nome: "João", notas: [8, 7, 9] },
+            { nome: "Maria", notas: [5, 6, 7] },
+            { nome: "Pedro", notas: [4, 5, 6] },
+        ];
+
+        const pesos = [3, 2, 1];
+        const resultadoAlunos = calcularMedias(alunos, pesos);
+        document.write("<h3>4. Notas e médias dos alunos:</h3>");
+        resultadoAlunos.forEach(aluno => 
+            document.write(`${aluno.nome}: Notas: ${aluno.notas.join(", ")}, Média: ${aluno.media}, Status: ${aluno.status}<br>`)
+        );
+
+        // 5. Soma de duas matrizes
+        function somaMatrizes(matrizA, matrizB) {
+            return matrizA.map((linha, i) => linha.map((valor, j) => valor + matrizB[i][j]));
+        }
+
+        const matrizA = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9],
+        ];
+        const matrizB = [
+            [9, 8, 7],
+            [6, 5, 4],
+            [3, 2, 1],
+        ];
+
+        const matrizSoma = somaMatrizes(matrizA, matrizB);
+        document.write("<h3>5. Soma das matrizes:</h3>");
+        matrizSoma.forEach(linha => document.write(linha.join(" ") + "<br>"));
+
+        // 6. Gerar partículas com probabilidades
+        function gerarParticulas(numParticulas) {
+            const particulas = [];
+            for (let i = 0; i < numParticulas; i++) {
+                const massa = Math.random() < 0.5 ? 1 : 2;
+                const carga = Math.random() < 0.833 ? 1 : 2; // 5 vezes mais provável que q = 1
+                const px = Math.random().toFixed(2);
+                const py = Math.random().toFixed(2);
+                const pz = Math.random().toFixed(2);
+                particulas.push({ id: i, massa, carga, px, py, pz });
+            }
+            return particulas;
+        }
+
+        const particulas = gerarParticulas(5);
+        document.write("<h3>6. Partículas:</h3>");
+        particulas.forEach(p => 
+            document.write(`Partícula ${p.id}: ${p.massa}, ${p.carga}, ${p.px}, ${p.py}, ${p.pz}<br>`)
+        );
+
+        // 7. Momento total igual à unidade
+        function gerarParticulasComMomento(numParticulas) {
+            const particulas = [];
+            for (let i = 0; i < numParticulas; i++) {
+                const massa = Math.random() < 0.5 ? 1 : 2;
+                const carga = Math.random() < 0.833 ? 1 : 2; // 5 vezes mais provável que q = 1
+                const px = Math.random();
+                const py = Math.random();
+                const pz = Math.sqrt(1 - px ** 2 - py ** 2).toFixed(2); // Garante |p| = 1
+                particulas.push({ id: i, massa, carga, px: px.toFixed(2), py: py.toFixed(2), pz });
+            }
+            return particulas;
+        }
+
+        const particulasComMomento = gerarParticulasComMomento(5);
+        document.write("<h3>7. Partículas com |p| = 1:</h3>");
+        particulasComMomento.forEach(p => 
+            document.write(`Partícula ${p.id}: ${p.massa}, ${p.carga}, ${p.px}, ${p.py}, ${p.pz}<br>`)
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios HTML e JavaScript</title>
+    <script>
+        // Funções JavaScript incluídas
+        function calcular(funcao) {
+            const valor = parseFloat(document.getElementById("inputNumero").value);
+            let resultado = 0;
+            switch (funcao) {
+                case "seno":
+                    resultado = Math.sin(valor);
+                    break;
+                case "cosseno":
+                    resultado = Math.cos(valor);
+                    break;
+                case "tangente":
+                    resultado = Math.tan(valor);
+                    break;
+                case "exponencial":
+                    resultado = Math.exp(valor);
+                    break;
+                case "logNatural":
+                    resultado = Math.log(valor);
+                    break;
+                case "log10":
+                    resultado = Math.log10(valor);
+                    break;
+                case "raizQuadrada":
+                    resultado = Math.sqrt(valor);
+                    break;
+                case "raizCubica":
+                    resultado = Math.cbrt(valor);
+                    break;
+                case "potencia":
+                    const expoente = parseFloat(prompt("Digite o expoente:"));
+                    resultado = Math.pow(valor, expoente);
+                    break;
+            }
+            document.getElementById("resultado").value = resultado.toFixed(4);
+        }
+
+        function calcularRadio() {
+            const valor = parseFloat(document.getElementById("inputValorRadio").value);
+            const funcaoSelecionada = document.querySelector('input[name="funcao"]:checked').value;
+            let resultado = 0;
+
+            switch (funcaoSelecionada) {
+                case "seno":
+                    resultado = Math.sin(valor);
+                    break;
+                case "cosseno":
+                    resultado = Math.cos(valor);
+                    break;
+                case "tangente":
+                    resultado = Math.tan(valor);
+                    break;
+            }
+
+            document.getElementById("resultadoRadio").value = resultado.toFixed(4);
+        }
+
+        function analisarNumeros() {
+            const numeros = document.getElementById("inputNumeros").value.split(",").map(Number);
+            const soma = numeros.reduce((acc, val) => acc + val, 0);
+            const menor = Math.min(...numeros);
+            const maior = Math.max(...numeros);
+            const media = soma / numeros.length;
+
+            document.getElementById("resultadoSoma").textContent = `Soma: ${soma}`;
+            document.getElementById("resultadoMenor").textContent = `Menor: ${menor}`;
+            document.getElementById("resultadoMaior").textContent = `Maior: ${maior}`;
+            document.getElementById("resultadoMedia").textContent = `Média: ${media.toFixed(2)}`;
+        }
+
+        function calcularNota() {
+            const respostasCorretas = ["a", "b", "c", "a", "d"];
+            let acertos = 0;
+
+            respostasCorretas.forEach((resposta, index) => {
+                const selecionada = document.querySelector(`input[name="questao${index + 1}"]:checked`);
+                if (selecionada && selecionada.value === resposta) acertos++;
+            });
+
+            const nota = (acertos / respostasCorretas.length) * 10;
+            alert(`Você acertou ${acertos} questões. Sua nota é ${nota.toFixed(1)}`);
+        }
+
+        function calcularNotaVF() {
+            const respostas = [true, false, true, false, true];
+            let nota = 0;
+
+            respostas.forEach((resposta, index) => {
+                const selecionada = document.getElementById(`questaoVF${index + 1}`).checked;
+                if (selecionada === resposta) nota += 2;
+                else nota -= 2;
+            });
+
+            nota = Math.max(nota, 0);
+            alert(`Sua nota final é ${nota}`);
+        }
+
+        function calcularReflexao() {
+            const z1 = parseFloat(document.getElementById("z1").value);
+            const z2 = parseFloat(document.getElementById("z2").value);
+            const reflexao = Math.pow((z1 - z2) / (z1 + z2), 2);
+
+            document.getElementById("resultadoReflexao").value = (reflexao * 100).toFixed(2) + "%";
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora Avançada</h1>
+    <input type="number" id="inputNumero" placeholder="Digite um número">
+    <button onclick="calcular('seno')">Seno</button>
+    <button onclick="calcular('cosseno')">Cosseno</button>
+    <button onclick="calcular('tangente')">Tangente</button>
+    <button onclick="calcular('exponencial')">Exponencial</button>
+    <button onclick="calcular('logNatural')">Log Natural</button>
+    <button onclick="calcular('log10')">Log Base 10</button>
+    <button onclick="calcular('raizQuadrada')">Raiz Quadrada</button>
+    <button onclick="calcular('raizCubica')">Raiz Cúbica</button>
+    <button onclick="calcular('potencia')">Potência</button>
+    <br>
+    <label>Resultado:</label>
+    <input type="text" id="resultado" readonly>
+
+    <h2>Calculadora com Radio Buttons</h2>
+    <input type="number" id="inputValorRadio" placeholder="Digite um valor">
+    <br>
+    <input type="radio" name="funcao" value="seno" onchange="calcularRadio()"> Seno
+    <input type="radio" name="funcao" value="cosseno" onchange="calcularRadio()"> Cosseno
+    <input type="radio" name="funcao" value="tangente" onchange="calcularRadio()"> Tangente
+    <br>
+    <label>Resultado:</label>
+    <input type="text" id="resultadoRadio" readonly>
+
+    <h2>Análise de Números</h2>
+    <input type="text" id="inputNumeros" placeholder="Digite números separados por vírgula">
+    <button onclick="analisarNumeros()">Analisar</button>
+    <p id="resultadoSoma"></p>
+    <p id="resultadoMenor"></p>
+    <p id="resultadoMaior"></p>
+    <p id="resultadoMedia"></p>
+
+    <h2>Prova de Múltipla Escolha</h2>
+    <form>
+        <p>1. Questão 1:</p>
+        <input type="radio" name="questao1" value="a"> Opção A
+        <input type="radio" name="questao1" value="b"> Opção B
+        <input type="radio" name="questao1" value="c"> Opção C
+        <br>
+        <p>2. Questão 2:</p>
+        <input type="radio" name="questao2" value="a"> Opção A
+        <input type="radio" name="questao2" value="b"> Opção B
+        <input type="radio" name="questao2" value="c"> Opção C
+        <br>
+        <button type="button" onclick="calcularNota()">Calcular Nota</button>
+    </form>
+
+    <h2>Impedância Acústica</h2>
+    <input type="number" id="z1" placeholder="Z1">
+    <input type="number" id="z2" placeholder="Z2">
+    <button onclick="calcularReflexao()">Calcular Reflexão</button>
+    <br>
+    <label>Resultado:</label>
+    <input type="text" id="resultadoReflexao" readonly>
+</body>
+</html>

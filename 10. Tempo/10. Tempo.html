@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios - Física e Matemática</title>
+    <style>
+        #asterisco1, #asterisco2, #planeta {
+            position: absolute;
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        // 1. Decaimento radioativo
+        function calcularDecaimento() {
+            const nascimento = document.getElementById("dataNascimento").value;
+            const hoje = new Date();
+            const dataNasc = new Date(nascimento);
+
+            const diferencaDias = Math.floor((hoje - dataNasc) / (1000 * 60 * 60 * 24));
+            alert(`A diferença de dias é aproximadamente: ${diferencaDias} dias.`);
+        }
+
+        // 2. Dois asteriscos oscilantes
+        function iniciarOscilacao() {
+            const asterisco1 = document.getElementById("asterisco1");
+            const asterisco2 = document.getElementById("asterisco2");
+            let angulo1 = 0;
+            let angulo2 = 0;
+            const velocidade2 = 2;
+
+            setInterval(() => {
+                angulo1 += 0.1;
+                angulo2 += 0.1 * velocidade2;
+
+                asterisco1.style.left = 150 + 50 * Math.cos(angulo1) + "px";
+                asterisco2.style.top = 150 + 50 * Math.sin(angulo2) + "px";
+            }, 50);
+        }
+
+        // 3. Planeta girando ao redor do Sol
+        function simularPlaneta() {
+            const planeta = document.getElementById("planeta");
+            let angulo = 0;
+
+            setInterval(() => {
+                angulo += 0.1;
+                planeta.style.left = 150 + 100 * Math.cos(angulo) + "px";
+                planeta.style.top = 150 + 100 * Math.sin(angulo) + "px";
+            }, 50);
+        }
+
+        // 5. Simulação de caça-níqueis
+        function iniciarCacaNiqueis() {
+            const opcoes = ["A", "B", "C"];
+            const resultado = document.getElementById("resultado");
+
+            setTimeout(() => {
+                resultado.textContent = `1º elemento: ${opcoes[Math.floor(Math.random() * 3)]}`;
+            }, 3000);
+
+            setTimeout(() => {
+                resultado.textContent += ` | 2º elemento: ${opcoes[Math.floor(Math.random() * 3)]}`;
+            }, 4000);
+
+            setTimeout(() => {
+                resultado.textContent += ` | 3º elemento: ${opcoes[Math.floor(Math.random() * 3)]}`;
+            }, 5000);
+        }
+
+        // 6. Lançamento oblíquo
+        function simularLancamento() {
+            const v0 = parseFloat(document.getElementById("velocidadeInicial").value);
+            const angulo = parseFloat(document.getElementById("anguloLancamento").value) * (Math.PI / 180);
+            const gravidade = 9.8;
+
+            const vx = v0 * Math.cos(angulo);
+            const vyInicial = v0 * Math.sin(angulo);
+
+            let tempo = 0;
+            const intervalo = 0.1;
+            const projecao = document.getElementById("projecao");
+            projecao.innerHTML = "";
+
+            const intervaloId = setInterval(() => {
+                const x = vx * tempo;
+                const y = vyInicial * tempo - 0.5 * gravidade * tempo ** 2;
+
+                if (y < 0) {
+                    clearInterval(intervaloId);
+                } else {
+                    projecao.innerHTML += `(${x.toFixed(2)}, ${y.toFixed(2)})<br>`;
+                }
+                tempo += intervalo;
+            }, 100);
+        }
+    </script>
+</head>
+<body>
+    <h1>Exercícios - Física e Matemática</h1>
+
+    <h2>1. Decaimento Radioativo</h2>
+    <label for="dataNascimento">Data de Nascimento:</label>
+    <input type="date" id="dataNascimento">
+    <button onclick="calcularDecaimento()">Calcular diferença de dias</button>
+
+    <h2>2. Dois Asteriscos Oscilantes</h2>
+    <div id="asterisco1" style="left: 150px; top: 150px;">*</div>
+    <div id="asterisco2" style="left: 150px; top: 200px;">*</div>
+    <button onclick="iniciarOscilacao()">Iniciar Oscilação</button>
+
+    <h2>3. Planeta Girando em Torno do Sol</h2>
+    <div id="planeta" style="left: 150px; top: 50px;">O</div>
+    <button onclick="simularPlaneta()">Iniciar Movimento</button>
+
+    <h2>5. Simulação de Caça-Níqueis</h2>
+    <button onclick="iniciarCacaNiqueis()">Iniciar</button>
+    <p id="resultado"></p>
+
+    <h2>6. Lançamento Oblíquo</h2>
+    <label for="velocidadeInicial">Velocidade inicial (m/s):</label>
+    <input type="number" id="velocidadeInicial" step="0.1"><br>
+    <label for="anguloLancamento">Ângulo de lançamento (graus):</label>
+    <input type="number" id="anguloLancamento" step="1"><br>
+    <button onclick="simularLancamento()">Simular Lançamento</button>
+    <p id="projecao"></p>
+</body>
+</html>

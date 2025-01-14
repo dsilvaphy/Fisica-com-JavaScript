@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercícios de JavaScript</title>
+</head>
+<body>
+    <script>
+        // 1. Números inteiros entre 0 e 10
+        document.write("<h3>1. Números de 0 a 10:</h3>");
+        
+        // Usando while
+        let i = 0;
+        while (i <= 10) {
+            document.write(i + " ");
+            i++;
+        }
+
+        document.write("<br><strong>Usando do...while:</strong><br>");
+        let j = 0;
+        do {
+            document.write(j + " ");
+            j++;
+        } while (j <= 10);
+
+        document.write("<br><strong>Usando for:</strong><br>");
+        for (let k = 0; k <= 10; k++) {
+            document.write(k + " ");
+        }
+
+        // 2. Oscilador harmônico amortecido
+        document.write("<h3>2. Posições do oscilador harmônico:</h3>");
+        const A = 0.10;
+        const f = 2; // Hz
+        const b = 2; // b/2m
+        const interval = 0.1; // Intervalo de tempo em segundos
+        const tMax = 2; // Tempo máximo
+
+        let t = 0;
+        while (t <= tMax) {
+            const x = A * Math.cos(2 * Math.PI * f * t) * Math.exp(-b * t);
+            document.write(`t=${t.toFixed(1)}, x=${x.toFixed(3)}<br>`);
+            t += interval;
+        }
+
+        // 3. Queda livre
+        document.write("<h3>3. Posições sucessivas na queda livre:</h3>");
+        const g = 9.8; // Gravidade em m/s²
+        let altura = parseFloat(prompt("Digite a altura inicial em metros:"));
+        let tempo = 0;
+
+        do {
+            const h = altura - (0.5 * g * tempo ** 2);
+            if (h <= 0) {
+                document.write(`t=${tempo.toFixed(1)}, altura=0.0 (atingiu o solo)<br>`);
+                break;
+            } else {
+                document.write(`t=${tempo.toFixed(1)}, altura=${h.toFixed(2)}<br>`);
+            }
+            tempo += 0.1;
+        } while (true);
+
+        // 4. Escolha de função com switch...case
+        document.write("<h3>4. Escolha de função com switch...case:</h3>");
+        const funcao = prompt("Escolha uma função (seno, cosseno, tangente, raiz, exponencial):").toLowerCase();
+        const numero = parseFloat(prompt("Digite o número para a função:"));
+        let resultado;
+
+        switch (funcao) {
+            case "seno":
+                resultado = Math.sin(numero);
+                break;
+            case "cosseno":
+                resultado = Math.cos(numero);
+                break;
+            case "tangente":
+                resultado = Math.tan(numero);
+                break;
+            case "raiz":
+                resultado = Math.sqrt(numero);
+                break;
+            case "exponencial":
+                resultado = Math.exp(numero);
+                break;
+            default:
+                resultado = "Função inválida!";
+        }
+
+        document.write(`Função escolhida: ${funcao}, Resultado: ${resultado}<br>`);
+
+        // 5. Refaça com if...else
+        document.write("<h3>5. Escolha de função com if...else:</h3>");
+        const funcaoIf = prompt("Escolha uma função (seno, cosseno, tangente, raiz, exponencial):").toLowerCase();
+        const numeroIf = parseFloat(prompt("Digite o número para a função:"));
+        let resultadoIf;
+
+        if (funcaoIf === "seno") {
+            resultadoIf = Math.sin(numeroIf);
+        } else if (funcaoIf === "cosseno") {
+            resultadoIf = Math.cos(numeroIf);
+        } else if (funcaoIf === "tangente") {
+            resultadoIf = Math.tan(numeroIf);
+        } else if (funcaoIf === "raiz") {
+            resultadoIf = Math.sqrt(numeroIf);
+        } else if (funcaoIf === "exponencial") {
+            resultadoIf = Math.exp(numeroIf);
+        } else {
+            resultadoIf = "Função inválida!";
+        }
+
+        document.write(`Função escolhida: ${funcaoIf}, Resultado: ${resultadoIf}<br>`);
+    </script>
+</body>
+</html>
